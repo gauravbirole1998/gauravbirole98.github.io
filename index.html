@@ -1,0 +1,1060 @@
+    <!doctype html>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Gaurav Birole — Portfolio</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root{
+        --bg-0: #020617;
+        --bg-1: #0014ff; /* deep blue */
+        --accent-a: #00f0ff; /* aqua */
+        --accent-b: #a200ff; /* neon purple */
+        --glass: rgba(255,255,255,0.06);
+        --glass-2: rgba(255,255,255,0.03);
+        --muted: rgba(255,255,255,0.78);
+        --maxw: 1200px;
+        --radius: 16px;
+        }
+
+        *{box-sizing:border-box;margin:0;padding:0}
+        html,body{height:100%}
+        body{
+        font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial;
+        background: linear-gradient(120deg, rgba(4,8,25,1) 0%, rgba(6,12,48,1) 40%, rgba(8,6,40,1) 100%);
+        color:#fff;
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+        overflow-x:hidden;
+        line-height:1.45;
+        padding-top:88px; /* navbar height */
+        }
+
+        /* ===== animated background blobs (slow & elegant) ===== */
+        .bg-wrapper{
+        position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+        }
+        .blob{
+        position:absolute;
+        border-radius:50%;
+        filter: blur(40px);
+        opacity:0.75;
+        mix-blend-mode:screen;
+        animation:blobFloat 28s linear infinite;
+        }
+        .blob.a{ width:520px; height:520px; left:-8%; top:10%; background: radial-gradient(circle at 30% 30%, var(--bg-1), transparent 60%); animation-delay:0s; }
+        .blob.b{ width:420px; height:420px; right:-6%; top:25%; background: radial-gradient(circle at 50% 40%, var(--accent-a), transparent 60%); animation-delay:3s; }
+        .blob.c{ width:360px; height:360px; left:20%; bottom:-6%; background: radial-gradient(circle at 40% 60%, var(--accent-b), transparent 60%); animation-delay:6s; }
+        @keyframes blobFloat{
+        0%{ transform: translateY(0) translateX(0) scale(1); }
+        50%{ transform: translateY(-40px) translateX(20px) scale(1.05); }
+        100%{ transform: translateY(0) translateX(0) scale(1); }
+        }
+
+        /* ===== NAVBAR (glassmorphism) ===== */
+        .navbar{
+        --h:72px;
+        position:fixed;
+        top:12px; left:50%;
+        transform:translateX(-50%);
+        z-index:1200;
+        width: min(calc(100% - 40px), var(--maxw));
+        height:var(--h);
+        display:flex;align-items:center;justify-content:space-between;padding:10px 20px;
+        background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+        border-radius:999px;
+        border: 1px solid rgba(255,255,255,0.04);
+        box-shadow: 0 8px 30px rgba(3,6,20,0.6);
+        backdrop-filter: blur(10px) saturate(120%);
+        transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .navbar .brand{display:flex;align-items:center;gap:12px}
+        .logo{
+        width:48px;height:48px;border-radius:10px;
+        background: linear-gradient(135deg,var(--bg-1),var(--accent-b));
+        display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-family:'Poppins';
+        box-shadow: 0 6px 18px rgba(162,2,255,0.12);
+        }
+        .nav-links{display:flex;gap:12px;align-items:center}
+        .nav-links a{
+        color:var(--muted);
+        text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600;
+        transition: all .22s ease;
+        }
+        .nav-links a.active, .nav-links a:hover{
+        color:#fff; background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+        transform:translateY(-3px);
+        box-shadow: 0 10px 28px rgba(9,9,20,0.45);
+        }
+
+        /* small screen hamburger */
+        .hamburger{display:none; cursor:pointer}
+        .hamburger .bar{width:22px;height:2px;background:#fff;margin:4px 0;border-radius:2px;opacity:0.9}
+
+        /* ===== LAYOUT ===== */
+        .container{max-width:var(--maxw);margin:0 auto;padding:28px}
+        header.hero{
+        min-height:72vh; display:flex; align-items:center; justify-content:center; position:relative; z-index:2;
+        }
+        .hero-card{
+        width:100%; max-width:1100px; border-radius:18px; padding:28px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+        border:1px solid rgba(255,255,255,0.04);
+        backdrop-filter: blur(8px);
+        display:grid; grid-template-columns: 1fr 380px; gap:28px; align-items:center;
+        box-shadow: 0 40px 80px rgba(3,6,20,0.6);
+        }
+
+        .hero-left h1{
+        font-size: clamp(28px, 4.4vw, 48px);
+        line-height:1.02;
+        margin-bottom:8px;
+        font-weight:800;
+        background: linear-gradient(90deg,var(--bg-1),var(--accent-a),var(--accent-b));
+        -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+        }
+        .hero-left p.lead{color:var(--muted); margin-bottom:16px; font-size:1.05rem}
+
+        .hero-cta{display:flex; gap:12px;align-items:center}
+        .btn{
+        background: linear-gradient(90deg,var(--bg-1),var(--accent-a));
+        color:#fff;padding:10px 16px;border-radius:999px;font-weight:700;border:0;cursor:pointer;
+        box-shadow:0 10px 30px rgba(0,154,255,0.12); position:relative; overflow:hidden;
+        }
+        .btn.secondary{
+        background:transparent;border:1px solid rgba(255,255,255,0.06); color:var(--muted);
+        }
+
+        /* profile column */
+        .hero-right{display:flex;flex-direction:column;align-items:center;gap:12px}
+        .avatar{
+        width:160px;height:160px;border-radius:18px; overflow:hidden;
+        border:6px solid rgba(255,255,255,0.03);
+        background: linear-gradient(135deg,var(--bg-1),var(--accent-b));
+        display:flex;align-items:center;justify-content:center;font-weight:700;font-size:36px;
+        position:relative; box-shadow: 0 12px 40px rgba(162,2,255,0.12);
+        }
+        
+
+                .avatar {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid transparent;
+            background: linear-gradient(135deg, #fe4f95, #00f2fe);
+            padding: 2px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 10%;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* .avatar-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 12px;
+            color: #000;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        } */
+
+
+        /* .avatar img{width:100%;height:100%;object-fit:cover;display:block} */
+
+        .hero-meta { color:var(--muted); text-align:center }
+
+        /* ===== SECTIONS (glass cards) ===== */
+        section{padding:64px 0; position:relative; z-index:2}
+        .section-title{
+        font-size:1.6rem;margin-bottom:18px;font-weight:700;color:#fff;
+        display:flex;align-items:center;gap:12px;
+        }
+
+        .glass{
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        border:1px solid rgba(255,255,255,0.04);
+        border-radius:14px;padding:18px;backdrop-filter: blur(8px);
+        box-shadow: 0 18px 40px rgba(4,6,20,0.6);
+        }
+
+        /* layout utilities */
+        .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+        .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+        .stack{display:flex;flex-direction:column;gap:12px}
+
+        /* project cards */
+        .project-card{
+        position:relative;padding:18px;border-radius:14px;overflow:hidden;
+        transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s;
+        transform-origin:center;
+        background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        border:1px solid rgba(255,255,255,0.03);
+        }
+        .project-card:hover{
+        transform: translateY(-10px) scale(1.01);
+        box-shadow:0 30px 80px rgba(6,10,35,0.7);
+        }
+        .project-badge{padding:6px 10px;border-radius:999px;color:#fff;font-weight:700}
+        .p-dalmia{background:linear-gradient(135deg,#3a4ba8,#6f4acb)}
+        .p-bulkvan{background:linear-gradient(135deg,#FF6B35,#F7931E)}
+        .p-eko{background:linear-gradient(135deg,#4A90E2,#357ABD)}
+
+        /* features inside project */
+        .features-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+        .feature-card{
+        padding:12px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.025);
+        display:flex;gap:12px;align-items:flex-start; transition: transform .22s, box-shadow .22s;
+        }
+        .feature-card:hover{ transform: translateY(-6px); box-shadow:0 14px 36px rgba(6,10,35,0.45) }
+        .feature-icon{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+        .feature-title{font-weight:700;color:#fff}
+        .feature-desc{color:var(--muted);font-size:0.95rem}
+
+        /* skill badges */
+        .skill-tags{display:flex;flex-wrap:wrap;gap:8px}
+        .skill-pill{padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,var(--bg-1),var(--accent-a));font-weight:700;color:#fff;font-size:0.88rem;box-shadow:0 8px 28px rgba(0,154,255,0.08)}
+
+        /* progress bars */
+        .progress{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden}
+        .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));width:0%; transition:width 1s ease}
+
+        /* timeline */
+        .timeline{position:relative;padding-left:18px}
+        .timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent-a),var(--accent-b))}
+        .timeline-item{position:relative;padding:12px 16px;margin-bottom:12px;border-radius:10px;background:rgba(255,255,255,0.01); border:1px solid rgba(255,255,255,0.02)}
+        .timeline-item::before{content:'';position:absolute;left:-14px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--accent-a);box-shadow:0 6px 18px rgba(162,2,255,0.12)}
+
+        /* contact */
+        .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+        /* back to top */
+        .back-top{
+        position:fixed;right:22px;bottom:22px;background:linear-gradient(90deg,var(--bg-1),var(--accent-b));
+        color:#fff;padding:10px 12px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,0.5);cursor:pointer;display:none;z-index:1200;
+        }
+
+        /* small screens */
+        @media(max-width:980px){
+        .hero-card{grid-template-columns:1fr; padding:22px}
+        .grid-3{grid-template-columns:repeat(2,1fr)}
+        .project-card{padding:14px}
+        }
+        @media(max-width:680px){
+        .nav-links{display:none}
+        .hamburger{display:block}
+        .grid-3{grid-template-columns:1fr}
+        .contact-grid{grid-template-columns:1fr}
+        .hero-card{padding:16px}
+        .avatar{width:120px;height:120px}
+        body{padding-top:86px}
+        .navbar{left:12px; transform:none; width:calc(100% - 24px)}
+        }
+
+        /* fade-in reveal */
+        .reveal{opacity:0; transform:translateY(18px); transition:all .7s cubic-bezier(.2,.9,.2,1)}
+        .reveal.visible{opacity:1; transform:none}
+
+
+        /* // For my name Hover style */
+        h1:hover {
+          transform: translateY(-5px) scale(1.05);
+          text-shadow: 4px 4px 10px rgba(0, 242, 254, 0.6);
+          transition: transform 0.3s ease, text-shadow 0.3s ease;
+        }
+    </style>
+    </head>
+    <body>
+
+    <!-- animated background blobs -->
+    <div class="bg-wrapper" aria-hidden>
+        <div class="blob a"></div>
+        <div class="blob b"></div>
+        <div class="blob c"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <div class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="brand" style="display:flex;align-items:center;gap:12px">
+        <div class="logo">GB</div>
+        <div style="display:flex;flex-direction:column;line-height:1">
+            <span style="font-weight:700">Gaurav Birole</span>
+            <small style="color:var(--muted);font-weight:600;font-size:12px; margin-top:10px;">
+                Java · Spring Boot · MySQL
+            </small>
+        </div>
+
+        </div>
+
+        <div style="display:flex;align-items:center;gap:12px">
+        <nav class="nav-links" aria-label="Primary">
+            <a href="#home" data-target="home">Home</a>
+            <a href="#about" data-target="about">About</a>
+            <a href="#skills" data-target="skills">Skills</a>
+            <a href="#projects" data-target="projects">Projects</a>
+            <a href="#contact" data-target="contact">Contact</a>
+        </nav>
+
+        <button class="hamburger" aria-label="Open menu" title="Menu" id="menuBtn">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <header id="home" class="hero">
+        <div class="container">
+        <div class="hero-card reveal">
+            <div class="hero-left">
+            <h1>Gaurav Birole</h1>
+                <p class="lead">Software Developer • Manual Tester • Technical Writer — Building scalable backend systems, ensuring quality, and delivering clear documentation.</p>
+
+            <div class="hero-meta">
+                <div style="margin-bottom:10px;color:var(--muted)">
+                    📅 2 Years 7 Months &nbsp;|&nbsp; 📍 Bhopal, India</div>
+                <div style="display:flex;gap:12px" class="hero-cta">
+                <a class="btn" href="/doc/Gaurav-Birole.pdf" target="_blank" rel="noopener">Download Resume</a>
+                <a class="btn secondary" href="#contact">Contact Me</a>
+                </div>
+                <!-- <div style="margin-top:12px;color:var(--muted);font-size:0.95rem">Open to backend roles and contract work.</div> -->
+            </div>
+            </div>
+
+            <aside class="hero-right">
+            <!-- <div class="avatar" aria-hidden> -->
+                <!-- replace path with your photo -->
+                <!-- <img src="/images/mypic.png" alt="Gaurav Birole photo" onerror="this.style.display='none'">
+                <div style="position:absolute;bottom:8px;right:10px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b)); padding:6px 8px;border-radius:999px;font-weight:700;font-size:12px;color:#000">Backend</div>
+            </div> -->
+
+            <!-- // testing  -->
+             <div class="avatar" aria-hidden>
+                 <img src="images/mypic.png" alt="Gaurav Birole photo">
+                <!-- <div class="avatar-badge">Backend</div> -->
+            </div>
+
+            <div style="text-align:center;color:var(--muted);font-size:0.95rem">Java • Spring Boot • MySQL • Manual Tester • Technical Writer</div>
+            </aside>
+        </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ABOUT (kept from original content) -->
+       <section id="about">
+  <div class="container reveal">
+    <div class="section-title">About</div>
+    <div class="glass" style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+
+      <!-- Left: Intro -->
+      <div style="flex:1;min-width:220px">
+        <h3 style="margin-bottom:8px">Hello, I'm <span style="color:var(--accent-a)">Gaurav</span></h3>
+        <p style="color:var(--muted)">
+          I’m a dedicated <strong>Software Developer & Technical Writer</strong> with hands-on experience in backend development, 
+          manual testing, and creating comprehensive technical documentation.  
+          Over the past <strong>2+ years</strong>, I’ve worked on delivering high-quality backend services, API integrations, 
+          and clear documentation for enterprise applications.
+        </p>
+        <ul style="margin-top:12px;color:var(--muted);list-style:none;padding-left:0;line-height:1.6">
+          <li>📍 <strong>Location:</strong> Bhopal, India</li>
+          <li>💼 <strong>Experience:</strong> 2 Years 7 Months</li>
+          <li>🛠 <strong>Role:</strong> Backend Developer, Technical Writer & Manual Tester</li>
+        </ul>
+      </div>
+
+      <!-- Right: Highlights -->
+      <div style="flex:1;min-width:280px">
+        <div style="background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+                    border-radius:12px;padding:16px;box-shadow:0 4px 12px rgba(0,0,0,0.2)">
+          <p style="color:var(--muted); margin-bottom:8px"><strong>Key Highlights:</strong></p>
+          <ul style="color:var(--muted);line-height:1.8;margin:0;padding-left:18px">
+            <li>🚀 Built backend APIs using <strong>Java Spring Boot</strong> for web and mobile integrations.</li>
+            <li>📊 Designed and optimized <strong>MySQL schemas</strong>, improving query performance.</li>
+            <li>📝 Created detailed <strong>API documentation</strong>, mobile app flow diagrams, and sequence diagrams using <strong>PlantUML</strong>.</li>
+            <li>🔍 Conducted manual testing for web and mobile apps, reporting bugs and tracking fixes.</li>
+            <li>📦 Worked on enterprise-level projects like <strong>Dalmia Suvidha App & Web Portal, Dalmia IS Web Portal, Vahak Mitra</strong>, and more.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+        <!-- SKILLS -->
+        <div class="container reveal">
+
+        <section id="skills">
+    <div class="section-title">Skills</div>
+    
+    <div class="grid-3" style="margin-bottom:18px">
+        <div class="glass project-card">
+        <h4 style="margin-bottom:8px">Languages & Frameworks</h4>
+        <p class="feature-desc">Java, Spring Boot, Angular JS, HTML, CSS for full-stack development.</p>
+        <div style="margin-top:12px" class="skill-tags">
+            <span class="skill-pill">Java</span>
+            <span class="skill-pill">Spring Boot</span>
+            <span class="skill-pill">Angular JS</span>
+            <span class="skill-pill">HTML/CSS</span>
+        </div>
+        </div>
+        
+        <div class="glass project-card">
+        <h4 style="margin-bottom:8px">Cloud & DevOps</h4>
+        <p class="feature-desc">AWS cloud services, CI/CD pipelines, and deployment automation.</p>
+        <div style="margin-top:12px" class="skill-tags">
+            <span class="skill-pill">AWS EC2</span>
+            <span class="skill-pill">AWS RDS</span>
+            <span class="skill-pill">Jenkins</span>
+            <span class="skill-pill">Git</span>
+        </div>
+        </div>
+        
+        <div class="glass project-card">
+        <h4 style="margin-bottom:8px">Database & APIs</h4>
+        <p class="feature-desc">MySQL database design, REST API development with Swagger documentation.</p>
+        <div style="margin-top:12px" class="skill-tags">
+            <span class="skill-pill">MySQL</span>
+            <span class="skill-pill">REST API</span>
+            <span class="skill-pill">Swagger</span>
+        </div>
+        </div>
+    </div>
+    
+    <div class="grid-3" style="margin-bottom:18px">
+        <div class="glass project-card">
+        <h4 style="margin-bottom:8px">Development Tools</h4>
+        <p class="feature-desc">Version control, remote access, and file transfer utilities.</p>
+        <div style="margin-top:12px" class="skill-tags">
+            <span class="skill-pill">Bitbucket</span>
+            <span class="skill-pill">PuTTY</span>
+            <span class="skill-pill">WinSCP</span>
+        </div>
+        </div>
+        
+        <div class="glass project-card">
+        <h4 style="margin-bottom:8px">Monitoring & Testing</h4>
+        <p class="feature-desc">Application monitoring, performance testing, and logging frameworks.</p>
+        <div style="margin-top:12px" class="skill-tags">
+            <span class="skill-pill">Postman</span>
+            <span class="skill-pill">New Relic</span>
+            <span class="skill-pill">JMeter</span>
+            <span class="skill-pill">Log4j</span>
+        </div>
+        </div>
+        
+        <div class="glass project-card">
+        <h4 style="margin-bottom:8px">Project Management</h4>
+        <p class="feature-desc">Issue tracking, CDN management, and agile project workflows.</p>
+        <div style="margin-top:12px" class="skill-tags">
+            <span class="skill-pill">JIRA</span>
+            <span class="skill-pill">Cloudflare</span>
+        </div>
+        </div>
+    </div>
+    
+    <div class="glass" style="padding:14px">
+        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+        <div style="flex:1;min-width:240px">
+            <div style="font-weight:700;margin-bottom:8px">Java & Spring Boot</div>
+            <div class="progress"><i style="width:90%"></i></div>
+        </div>
+        <div style="flex:1;min-width:240px">
+            <div style="font-weight:700;margin-bottom:8px">MySQL & Database</div>
+            <div class="progress"><i style="width:85%"></i></div>
+        </div>
+        <div style="flex:1;min-width:240px">
+            <div style="font-weight:700;margin-bottom:8px">AWS & DevOps</div>
+            <div class="progress"><i style="width:82%"></i></div>
+        </div>
+        <div style="flex:1;min-width:240px">
+            <div style="font-weight:700;margin-bottom:8px">Frontend & APIs</div>
+            <div class="progress"><i style="width:78%"></i></div>
+        </div>
+        <div style="flex:1;min-width:240px">
+            <div style="font-weight:700;margin-bottom:8px">Testing & Monitoring</div>
+            <div class="progress"><i style="width:88%"></i></div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+        </section>
+
+        <!-- PROJECTS -->
+                    <section id="projects">
+                    <div class="container reveal">
+                        <div class="section-title">Projects</div>
+
+                        <!-- Dalmia (merged style) -->
+                        <div style="margin-bottom:18px" class="glass project-card">
+                        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+                            <div>
+                            <h3 style="margin-bottom:6px">Dalmia CSR Application</h3>
+                            <!-- <p style="color:var(--muted);margin-bottom:10px">CSR management backend powering a Flutter mobile client — APIs, DB, and docs.</p> -->
+                            <div style="display:flex;gap:8px;flex-wrap:wrap">
+                                <span class="p-dalmia project-badge">Dalmia</span>
+                            </div>
+                            </div>
+
+                            <div style="min-width:200px;text-align:right">
+                            <div style="color:var(--muted);font-weight:700">Key tech</div>
+                            <div style="margin-top:8px" class="skill-tags">
+                                <span class="skill-pill">Java - Spring Boot</span>
+                                <span class="skill-pill">MySQL</span>
+                                <span class="skill-pill">Flutter</span>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:14px" class="features-grid">
+                            <div class="feature-card">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#FF6B6B,#FF9A9E)"><i class="fas fa-server"></i></div>
+                            <div>
+                                <div class="feature-title">Backend</div>
+                                <div class="feature-desc">Developed a robust backend application using Java Spring Boot, ensuring efficient processing and business logic implementation.</div>
+                            </div>
+                            </div>
+
+                            <div class="feature-card">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#4ECDC4,#55E6C1)"><i class="fas fa-exchange-alt"></i></div>
+                            <div>
+                                <div class="feature-title">APIs</div>
+                                <div class="feature-desc">Designed and implemented RESTful APIs to facilitate seamless communication between the backend services and Flutter mobile application. </div>
+                            </div>
+                            </div>
+
+                            <div class="feature-card">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#74B9FF,#A29BFE)"><i class="fas fa-database"></i></div>
+                            <div>
+                                <div class="feature-title">Database</div>
+                                <div class="feature-desc">Managed database tasks by integrating and optimizing MySQL database for efficient data storage, retrieval, and execution of complex queries.</div>
+                            </div>
+                            </div>
+
+                            <div class="feature-card">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#FFCE54,#FF9F43)"><i class="fas fa-file-code"></i></div>
+                            <div>
+                                <div class="feature-title">Docs</div>
+                                <div class="feature-desc">Documented detailed  technical specifications, API endpoints to maintain comprehensive project documentation and ensure clarity in development.</div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:12px;margin-top:14px;align-items:center">
+                            <!-- <a class="btn" href="#" onclick="openProjectModal('dalmia')">View Project</a> -->
+                            <!-- <a class="btn secondary" href="#" target="_blank">GitHub</a> -->
+                        </div>
+                        </div>
+
+                        <!-- Bulkvan -->
+                        <div style="margin-bottom:18px" class="glass project-card">
+                        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+                            <div>
+                            <h3 style="margin-bottom:6px">Bulkvan Logistics Pvt. Ltd.</h3>
+                            <!-- <p style="color:var(--muted);margin-bottom:10px">Transport & fleet web app—management, scalability, and client-driven features.</p> -->
+                            </div>
+
+                            <div style="min-width:200px;text-align:right">
+                            <div style="color:var(--muted);font-weight:700">Key tech</div>
+                            <div style="margin-top:8px" class="skill-tags">
+                                <span class="skill-pill">Java - Spring Boot</span>
+                                <span class="skill-pill">AngularJS</span>
+                                <span class="skill-pill">MySQL</span>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:14px" class="features-grid">
+                            <div class="feature-card">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#FF3B30,#FF9500)"><i class="fas fa-tasks"></i></div>
+                            <div><div class="feature-title">Project Mgmt</div><div class="feature-desc">Managed and supported the project, ensuring uninterrupted operation and effectively resolving any issues that surfaced. </div></div>
+                            </div>
+
+                            <div class="feature-card">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#34C759,#30D158)"><i class="fas fa-truck"></i></div>
+                            <div><div class="feature-title">Scalable Dev</div><div class="feature-desc">Designed, developed, and maintained a scalable, high-performance web application using Java Spring Boot and AngularJS. </div></div>
+                            </div>
+
+                            <div class="feature-card">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#007AFF,#5856D6)"><i class="fas fa-user-check"></i></div>
+                            <div><div class="feature-title">Client Focus</div><div class="feature-desc">Proactively addressed client requirements and implemented necessary changes to meet their needs.</div></div>
+                            </div>
+
+                            <div class="feature-card">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#AF52DE,#FF2D55)"><i class="fas fa-users-cog"></i></div>
+                            <div><div class="feature-title">Collaboration</div><div class="feature-desc">Collaborated with end users and cross-functional teams to gather and analyze requirements, translating them into technical specifications, system design and actionable tasks.</div></div>
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:12px;margin-top:14px">
+                            <!-- <a class="btn" href="#" onclick="openProjectModal('bulkvan')">View Project</a> -->
+                            <!-- <a class="btn secondary" href="#" target="_blank">GitHub</a> -->
+                        </div>
+                        </div>
+
+                        <!-- Eko -->
+                            <div class="glass project-card">
+                            <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+                                <div>
+                                <h3 style="margin-bottom:6px">Eko India Financial Services</h3>
+                                <!-- <p style="color:var(--muted);margin-bottom:10px">Financial platform modules built with Java, Struts & Hibernate.</p> -->
+                                </div>
+                                <div style="min-width:200px;text-align:right">
+                                <div style="color:var(--muted);font-weight:700">Key tech</div>
+                                <div style="margin-top:8px" class="skill-tags">
+                                    <span class="skill-pill">Java</span><span class="skill-pill">Struts</span><span class="skill-pill">Hibernate</span><span class="skill-pill">MySQL</span>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:14px" class="features-grid">
+                            <div class="feature-card">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#4A90E2,#357ABD)">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div>
+                                <div class="feature-title">Development</div>
+                                <div class="feature-desc">Contributed to the development of scalable and high-performance web application using Java, Struts and Hibernate. </div>
+                            </div>
+                            </div>
+                            <div class="feature-card">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#4A90E2,#357ABD)">
+                                <i class="fas fa-plug"></i>
+                            </div>
+                            <div>
+                                <div class="feature-title">API Integration</div>
+                                <div class="feature-desc">Developed RESTful APIs to improve application functionality and integrated APIs for seamless integration.</div>
+                            </div>
+                            </div>
+                            <div class="feature-card">
+                            <div class="feature-icon" style="background:linear-gradient(135deg,#4A90E2,#357ABD)">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <div class="feature-title">Team Collaboration</div>
+                                <div class="feature-desc">Collaborated with frontend developers and teams to define project scope and requirements, ensure smooth integration of UI components with backend services. </div>
+                            </div>
+                            </div>
+                        </div>
+
+                            <div style="display:flex;gap:12px;margin-top:14px">
+                                <!-- <a class="btn" href="#" onclick="openProjectModal('eko')">View Project</a> -->
+                                <!-- <a class="btn secondary" href="#" target="_blank">GitHub</a> -->
+                            </div>
+                            </div>
+
+                    <!-- Testing Projects  -->
+            <div class="glass project-card">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+                <div>
+                <h3 style="margin-bottom:6px">Dalmia Manual Testing Projects</h3>
+                <p style="color:var(--muted);margin-bottom:10px">Worked on multiple Dalmia web and mobile applications, including SmartD Pro App, Suvidha Web Portal & Mobile App, 
+                    Dalmia IS Web Portal, and Vahak Mitra (TMS) App. Performed manual testing, API testing, regression testing, 
+                    load and performance testing, smoke testing, and functional testing to ensure application reliability and stability.</p>
+        
+                <div style="min-width:200px;text-align:right">
+                    <div style="color:var(--muted);font-weight:700">Key Skills</div>
+                        <div style="margin-top:8px" class="skill-tags">
+                            <span class="skill-pill">Manual Testing</span>
+                            <span class="skill-pill">Functional Testing</span>
+                            <span class="skill-pill">Smoke Testing</span>
+                            <span class="skill-pill">UI Testing</span>
+                            <span class="skill-pill">API Testing</span>
+                            <span class="skill-pill">Performance Testing</span>
+                            <span class="skill-pill">Regression Testing</span>
+                            <span class="skill-pill">Test Case</span>
+                            <span class="skill-pill">Bug Reporting</span>
+                        </div>
+                </div>
+            </div>
+
+            <div style="margin-top:14px" class="features-grid">
+                <div class="feature-card">
+                <div class="feature-icon" style="background:linear-gradient(135deg,#F5A623,#D6862C)">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div>
+                    <div class="feature-title">Test Execution</div>
+                    <div class="feature-desc">Performed manual testing on SmartD Pro Plus and Suvidha Web Portal to identify defects and ensure overall application quality.</div>
+                </div>
+                </div>
+                <div class="feature-card">
+                <div class="feature-icon" style="background:linear-gradient(135deg,#F5A623,#D6862C)">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div>
+                    <div class="feature-title">Test Case</div>
+                    <div class="feature-desc">Created detailed functional and regression test cases covering end-to-end user flows and edge cases.</div>
+                </div>
+                </div>
+                <div class="feature-card">
+                <div class="feature-icon" style="background:linear-gradient(135deg,#F5A623,#D6862C)">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div>
+                    <div class="feature-title">Issue Resolution</div>
+                    <div class="feature-desc">Collaborated with developers to troubleshoot bugs, document findings, and verify fixes to ensure high-quality releases.</div>
+                </div>
+                </div>
+            </div>
+                <div style="display:flex;gap:12px;margin-top:14px">
+                <!-- <a class="btn" href="#" onclick="openProjectModal('dalmia')">View Project</a> -->
+                <!-- <a class="btn secondary" href="#" target="_blank">Documentation</a> -->
+                </div>
+            </div>
+            </div>
+
+            <!-- // Need to do from here  -->
+            <!-- Dalmia Technical Documentation -->
+
+                    <div class="glass project-card">
+            <div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start; flex-wrap:wrap">
+                <div>
+                <h3 style="margin-bottom:6px">Dalmia Technical Documentation (Technical Writing)</h3>
+            
+                <ul style="color:var(--muted); margin-bottom:10px; padding-left:18px">
+                    <li>Completed a 5-month on-site assignment at the client’s Noida location, creating and maintaining technical documentation for multiple Dalmia applications, including the Dalmia Suvidha App and Web Portal, Dalmia IS Web Portal, and Dalmia RCF Master.</li>
+                    <li>Produced detailed API documentation, mobile application flow diagrams, technical documentation, and API sequence diagrams (using PlantUML) to ensure clear communication and alignment between development, QA, and other stakeholders.</li>
+                </ul>
+
+                <div style="min-width:200px; text-align:right">
+                <div style="color:var(--muted); font-weight:700">Key Skills</div>
+                <div style="margin-top:8px; display:flex; flex-wrap:wrap; justify-content:flex-end; gap:6px" class="skill-tags">
+                    <span class="skill-pill">Technical Writing</span>
+                    <span class="skill-pill">API Documentation</span>
+                    <span class="skill-pill">App Flow Diagrams</span>
+                    <span class="skill-pill">API Sequence Diagram</span>
+                    <span class="skill-pill">Postman Collections for APIs</span>
+                </div>
+                </div>
+            </div>
+
+            <div style="margin-top:14px" class="features-grid">
+                <div class="feature-card">
+                <div class="feature-icon" style="background:linear-gradient(135deg,#8E44AD,#5C2E91)">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div>
+                    <div class="feature-title">API Documentation</div>
+                    <div class="feature-desc">Documented REST APIs and created sequence diagrams for better developer understanding and integration.</div>
+                </div>
+                </div>
+                
+                <div class="feature-card">
+                <div class="feature-icon" style="background:linear-gradient(135deg,#8E44AD,#5C2E91)">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+                <div>
+                    <div class="feature-title">Mobile & Web App Flow</div>
+                    <div class="feature-desc">Designed clear and concise flow diagrams to represent app navigation and user interactions.</div>
+                </div>
+                </div>
+                
+                <div class="feature-card">
+                <div class="feature-icon" style="background:linear-gradient(135deg,#8E44AD,#5C2E91)">
+                    <i class="fas fa-users-cog"></i>
+                </div>
+                <div>
+                    <div class="feature-title">Cross-Team Clarity</div>
+                    <div class="feature-desc">Created documentation tailored for developers, QA teams, support staff, and end users to improve product usability and maintainability.</div>
+                </div>
+                </div>
+            </div>
+
+            <div style="display:flex; gap:12px; margin-top:14px">
+                <!-- <a class="btn" href="#" onclick="openProjectModal('dalmia-doc')">View Project</a> -->
+                <!-- <a class="btn secondary" href="#" target="_blank">Documentation</a> -->
+            </div>
+            </div>
+        
+            </section>
+
+
+        <!-- EXPERIENCE & EDUCATION (kept content but concise) -->
+        <section id="experience">
+        <div class="container reveal">
+            <div class="section-title">Experience & Education</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+            <div class="glass">
+                <h4 style="margin-bottom:8px">Experience</h4>
+                <div class="timeline">
+                
+                <!-- Software Developer -->
+                <div class="timeline-item">
+                <strong>Software Developer</strong> — AlignTogether Solutions Pvt. Ltd., Bhopal, M.P.
+                <div style="color:var(--muted); font-size:0.95rem">
+                    2023 – Present
+                    <ul style="margin:6px 0 0 18px; padding:0; list-style:disc;">
+                    <li>Developed backend services using Java Spring Boot for APIs and database design.</li>
+                    <li>Implemented REST APIs for integration with web and mobile applications.</li>
+                    <li>Optimized SQL queries and database performance for better scalability.</li>
+                    <li>Collaborated with frontend teams to ensure seamless API integration.</li>
+                    </ul>
+                </div>
+                </div>
+
+                <!-- Manual Tester -->
+                <div class="timeline-item">
+                <strong>Manual Tester</strong>
+                <div style="color:var(--muted); font-size:0.95rem">
+                    <ul style="margin:6px 0 0 18px; padding:0; list-style:disc;">
+                    <li>Created and executed functional, regression, and API Testing</li>
+                    <li>Performed manual testing for web and mobile applications.</li>
+                    <li>Logged and tracked defects using JIRA, ensuring timely resolution.</li>
+                    <li>Validated APIs using Postman and verified data integrity in MySQL.</li>
+                    </ul>
+                </div>
+                </div>
+
+                    <!-- Technical Writer -->
+                <div class="timeline-item">
+                <strong>Technical Writer</strong>
+                <div style="color:var(--muted); font-size:0.95rem">
+                    <ul style="margin:6px 0 0 18px; padding:0; list-style:disc;">
+                    <li>Created comprehensive technical documentation for multiple projects.</li>
+                    <li>Developed API documentation, mobile app flow diagrams, and technical documentation.</li>
+                    <li>Created API sequence diagrams using PlantUML to illustrate API workflows.</li>
+                    <li>Collaborated with development and QA teams to maintain updated project documentation.</li>
+                    </ul>
+                </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Education  -->
+            <div class="glass">
+                <h4 style="margin-bottom:8px">Education</h4>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <strong>Bachelor of Engineering (Civil Engineering)</strong> — Sagar Institute of Research & Technology, Bhopal (M.P.)
+                <div style="color:var(--muted);font-size:0.95rem">2016 – 2020 — CGPA: 8.1</div>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>Higher Secondary School Certificate</strong>
+                     <div style="color:var(--muted); font-size:0.95rem">
+                Mission Boy’s H.S., Seoni (M.P.) — 2016 — Percentage: 66.6%
+                </div>
+                </div>
+                <div class="timeline-item">
+                    <strong>High School Certificate</strong>
+                    <div style="color:var(--muted); font-size:0.95rem">
+                Mission Boy’s H.S., Seoni (M.P.) – 2014 — Percentage: 60.6%
+                </div>
+            </div>
+            </div>
+            </div>
+            </div>
+        </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact">
+        <div class="container reveal">
+            <div class="section-title">Contact</div>
+
+            <div class="glass" style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start">
+            <div style="flex:1;min-width:260px">
+                <h4 style="margin-bottom:8px">Get in touch</h4>
+                <p style="color:var(--muted)">Email: <a href="mailto:gauravbirole98@gmail.com" style="color:var(--accent-a)">gauravbirole98@gmail.com</a></p>
+                <p style="color:var(--muted)">Phone: +91 7803840441</p>
+                <p style="color:var(--muted)">Location: Bhopal, India</p>
+                <p style="margin-top:20px"><a class="btn" href="/doc/Gaurav-Birole.pdf" target="_blank" style="padding:10px 20px; border-radius:25px; font-weight:600; display:inline-block; background:linear-gradient(to right, #0056ff, #00d4ff); color:white; text-decoration:underline;">Download CV</a>
+                </p>
+            </div>
+
+            <div style="flex:2;min-width:320px">
+                <!-- contact form (non-functional placeholder that mails to your email if integrated later) -->
+                <form id="contactForm" style="display:flex;flex-direction:column;gap:10px">
+                <input name="name" placeholder="Your name" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff" />
+                <input name="email" placeholder="Your email" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff" />
+                <textarea name="message" rows="5" placeholder="Message" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff"></textarea>
+                <div style="display:flex;gap:10px">
+                    <button class="btn" type="button" onclick="alert('Replace this with your form handler or email link')">Send Message</button>
+                    <button class="btn secondary" type="reset">Reset</button>
+                </div>
+                </form>
+            </div>
+            </div>
+
+            <div style="margin-top:14px;display:flex;gap:12px;align-items:center">
+            <a class="social" href="https://www.linkedin.com/in/gaurav-birole-8b6b201a7" target="_blank" style="color:var(--muted)"><i class="fab fa-linkedin fa-2x"></i></a>
+            <a class="social" href="https://github.com/gauravbirole1998" style="color:var(--muted)"><i class="fab fa-github fa-2x"></i></a>
+            <!-- <a class="social" href="#" style="color:var(--muted)"><i class="fab fa-twitter fa-2x"></i></a> -->
+            </div>
+        </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="padding:28px 0;text-align:center;color:var(--muted);position:relative;z-index:2">
+        © <span id="year"></span> Gaurav Birole — Built with HTML, CSS & JS — Deploy on GitHub Pages
+    </footer>
+
+    <!-- Back to top -->
+    <button class="back-top" id="backTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+    <!-- Project Modal (simple template) -->
+    <div id="projectModal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:2000;padding:20px">
+        <div style="width:100%;max-width:900px;border-radius:14px;padding:22px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);backdrop-filter:blur(6px);position:relative">
+        <button onclick="closeProjectModal()" style="position:absolute;right:12px;top:12px;background:transparent;border:0;color:var(--muted);font-size:18px;cursor:pointer"><i class="fas fa-times"></i></button>
+        <div id="projectModalContent"></div>
+        </div>
+    </div>
+
+    <script>
+    // used original file content as source (merged & restyled). Source citation: uploaded index.html. :contentReference[oaicite:1]{index=1}
+
+    // helper
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth scroll (nav links)
+    $$('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', e=>{
+        const href = a.getAttribute('href');
+        if(href.startsWith('#')){
+            e.preventDefault();
+            const el = document.querySelector(href);
+            if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+        });
+    });
+
+    // reveal on scroll (IntersectionObserver)
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(en=>{
+        if(en.isIntersecting){
+            en.target.classList.add('visible');
+            io.unobserve(en.target);
+        }
+        });
+    }, {threshold:0.12});
+    reveals.forEach(r=>io.observe(r));
+
+    // active nav highlight while scrolling
+    const sections = ['home','about','skills','projects','contact'];
+    function updateActiveNav(){
+        const scrollY = window.scrollY;
+        let current = 'home';
+        for(const id of sections){
+        const el = document.getElementById(id);
+        if(!el) continue;
+        if(scrollY >= el.offsetTop - (window.innerHeight/3)) current = id;
+        }
+        $$('.nav-links a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+current));
+    }
+    window.addEventListener('scroll', () => {
+        updateActiveNav();
+        // back to top toggle
+        const backTop = $('#backTop');
+        if(window.scrollY > 600) backTop.style.display = 'block'; else backTop.style.display = 'none';
+    });
+    updateActiveNav();
+
+    // back to top
+    $('#backTop').addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+    // menu toggle (hamburger)
+    const menuBtn = document.getElementById('menuBtn');
+    menuBtn && menuBtn.addEventListener('click', () => {
+        const nav = document.querySelector('.nav-links');
+        if(nav.style.display === 'flex'){ nav.style.display = 'none'; }
+        else { nav.style.display = 'flex'; nav.style.flexDirection = 'column'; nav.style.background = 'rgba(0,0,0,0.35)'; nav.style.padding = '12px'; nav.style.borderRadius = '12px'; }
+    });
+
+    // project modal content
+    function openProjectModal(key){
+        const modal = $('#projectModal');
+        const c = $('#projectModalContent');
+        c.innerHTML = ''; // populate based on key
+        if(key === 'dalmia'){
+        c.innerHTML = `<h2>Dalmia CSR Application</h2>
+            <p style="color:var(--muted)">Detailed backend for CSR workflows — Java Spring Boot, MySQL, REST APIs, technical docs and mobile integrations.</p>
+            <ul style="color:var(--muted)"><li><strong>Modules:</strong> User Management, CSR Programs, Reports</li><li><strong>APIs:</strong> Auth, CSR CRUD, Reporting</li><li><strong>Notes:</strong> See README or API docs for endpoints.</li></ul>`;
+        } else if(key === 'bulkvan'){
+        c.innerHTML = `<h2>Bulkvan Logistics Platform</h2><p style="color:var(--muted)">Transport/fleet management platform with operational dashboards and client-driven features.</p>`;
+        } else if(key === 'eko'){
+        c.innerHTML = `<h2>Eko Financial Services Platform</h2><p style="color:var(--muted)">Financial transactions modules using Java, Struts & Hibernate focused on performance.</p>`;
+        } else {
+        c.innerHTML = `<h2>Project</h2><p style="color:var(--muted)">Details coming soon.</p>`;
+        }
+        modal.style.display = 'flex';
+    }
+    function closeProjectModal(){ $('#projectModal').style.display = 'none'; }
+
+    // small ripple effect for .btn (pointer)
+    $$('.btn').forEach(btn=>{
+        btn.addEventListener('pointerdown', (e)=>{
+        const r = document.createElement('span');
+        const rect = btn.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height) * 1.6;
+        r.style.width = r.style.height = size+'px';
+        r.style.position = 'absolute';
+        r.style.left = (e.clientX - rect.left - size/2)+'px';
+        r.style.top = (e.clientY - rect.top - size/2)+'px';
+        r.style.borderRadius = '50%';
+        r.style.background = 'rgba(255,255,255,0.12)';
+        r.style.transform = 'scale(0)';
+        r.style.transition = 'transform .6s ease, opacity .6s ease';
+        r.style.pointerEvents = 'none';
+        btn.style.position = 'relative';
+        btn.appendChild(r);
+        requestAnimationFrame(()=> r.style.transform = 'scale(1)');
+        setTimeout(()=>{ r.style.opacity = '0'; }, 350);
+        setTimeout(()=> r.remove(), 700);
+        });
+    });
+
+    // subtle card parallax on mouse
+    document.addEventListener('mousemove', (e)=>{
+        if(window.innerWidth < 680) return;
+        const cards = document.querySelectorAll('.project-card, .feature-card');
+        const x = (e.clientX / window.innerWidth) - 0.5;
+        const y = (e.clientY / window.innerHeight) - 0.5;
+        cards.forEach((c,i)=>{
+        const intensity = 6 + (i%4);
+        c.style.transform = `perspective(700px) translateZ(0) rotateX(${y*intensity}deg) rotateY(${x*intensity}deg) translateY(-6px)`;
+        });
+    });
+    document.addEventListener('mouseleave', ()=> {
+        document.querySelectorAll('.project-card, .feature-card').forEach(c=> c.style.transform = '');
+    });
+
+    // initial reveal after page load
+    window.addEventListener('load', ()=> {
+        setTimeout(()=> $$('.reveal').forEach(el=>el.classList.add('visible')), 250);
+    });
+
+    // allow modal close on ESC
+    document.addEventListener('keydown', (e)=> { if(e.key==='Escape') closeProjectModal(); });
+    </script>
+    </body>
+    </html>
